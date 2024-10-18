@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS  # Import CORS
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 CORS(app) 
 
 # MongoDB connection
@@ -14,6 +14,10 @@ skills_collection = db['skills']
 introduction_collection = db['introduction']
 project_collection = db['projects']
 experience_collection = db['experience']
+
+@app.route('/', methods=['GET'])
+def index():
+    return app.send_static_file('index.html')
 
 # API to fetch skills
 @app.route('/skills', methods=['GET'])
