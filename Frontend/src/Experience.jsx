@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "./App.css"
+import './App.css';
 
 function Experience() {
   const [experience, setExperience] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [expandedExperience, setExpandedExperience] = useState({}); 
 
+  // Fetch experiences from the backend
   const fetchExperience = () => {
-    setIsVisible(prev => !prev)
     setLoading(true);
     setError(null);
     axios.get('http://127.0.0.1:5000/experience') // Your API endpoint
@@ -24,18 +25,39 @@ function Experience() {
       });
   };
 
+  useEffect(() => {
+    fetchExperience(); // Automatically fetch experiences when the component is mounted
+  }, []);
+
+  
+  const handleExperienceClick = (index) => {
+    setExpandedExperience(prevState => ({
+      ...prevState,
+      [index]: !prevState[index], 
+    }));
+  };
+
   return (
     <div>
-      <h2 onClick={fetchExperience} style={{ cursor: 'pointer', color: 'white', padding:'1rem', backgroundColor:'black', borderRadius:'1rem' }}>
+      <h2 onClick={() => setIsVisible(prev => !prev)} style={{ cursor: 'pointer', color: 'white', padding: '1rem', backgroundColor: 'black', borderRadius: '1rem' }}>
         Experience
       </h2>
-      {/* {loading && <p>Loading...</p>} */}
+
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      
+      {loading && <p>Loading...</p>}
+
+      {/* Show only two experience items initially */}
       <div className={`dropdown-content ${isVisible ? 'show' : ''}`}>
-        {experience.map((exp, index) => (
+        {experience.slice(0, 2).map((exp, index) => (
           <div key={index}>
-            <h3>{exp.name}</h3> {/* Display the name */}
-            <p>{exp.description}</p> {/* Display the description */}
+            <h3 onClick={() => handleExperienceClick(index)} style={{ cursor: 'pointer', color: 'blue' }}>
+              {exp.name}
+            </h3>
+            {/* Show the description if this experience is clicked and expanded */}
+            {expandedExperience[index] && (
+              <p>{exp.description}</p>
+            )}
           </div>
         ))}
       </div>
