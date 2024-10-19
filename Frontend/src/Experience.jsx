@@ -13,7 +13,7 @@ function Experience() {
   const fetchExperience = () => {
     setLoading(true);
     setError(null);
-    axios.get('http://127.0.0.1:5000/experience') // Your API endpoint
+    axios.get('https://portfolio-5-6jmt.onrender.com/experience') // Your API endpoint
       .then(response => {
         setExperience(response.data); // Store the fetched data
         setLoading(false);
