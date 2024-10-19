@@ -11,7 +11,7 @@ function Introduction() {
   const fetchIntroduction = () => {
     setLoading(true);
     setError(null);
-    axios.get('http://127.0.0.1:5000/introduction') // Your API endpoint
+    axios.get('https://portfolio-5-6jmt.onrender.com/introduction') // Your API endpoint
       .then(response => {
         setIntroduction(response.data); // Store the fetched data
         setIsVisible(prev => !prev); // Toggle visibility after fetching data
