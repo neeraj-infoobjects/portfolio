@@ -12,7 +12,7 @@ function Skills() {
   const fetchSkills = () => {
     setLoading(true);
     setError(null);
-    axios.get('http://127.0.0.1:5000/skills') // Your API endpoint
+    axios.get('https://portfolio-5-6jmt.onrender.com/skills') // Your API endpoint
       .then(response => {
         setSkills(response.data); // Store the fetched data
         setIsVisible(prev => !prev); // Toggle visibility
