@@ -13,7 +13,7 @@ function Projects() {
   const fetchProjects = () => {
     setLoading(true);
     setError(null);
-    axios.get('http://127.0.0.1:5000/projects') // Your API endpoint
+    axios.get('https://portfolio-5-6jmt.onrender.com/projects') // Your API endpoint
       .then(response => {
         setProjects(response.data); // Store the fetched data
         setLoading(false);
