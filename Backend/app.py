@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS  # Import CORS
+import os
 
 app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 CORS(app) 
@@ -57,5 +58,6 @@ def get_experience():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000)) 
+    app.run(host='0.0.0.0', port=port)
 
